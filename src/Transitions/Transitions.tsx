@@ -4,7 +4,7 @@ import {
   ImageStyle,
   StyleSheet,
   View,
-  ViewStyle
+  ViewStyle,
 } from "react-native";
 
 import { FlexibleCard as Card, StyleGuide, cards } from "../components";
@@ -22,14 +22,14 @@ const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: StyleGuide.palette.background
-  }
+    backgroundColor: StyleGuide.palette.background,
+  },
 });
 
 export default () => {
   return (
     <View style={styles.container}>
-      {cards.map(card => (
+      {cards.map((card) => (
         <Card key={card.id} style={{}} {...{ card }} />
       ))}
     </View>

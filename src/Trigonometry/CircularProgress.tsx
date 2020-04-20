@@ -6,7 +6,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 
 export const STROKE_WIDTH = 40;
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });
 
 interface CircularProgressProps {
@@ -31,7 +31,7 @@ export default ({ color, size, progress, icon }: CircularProgressProps) => {
           {...{
             cx,
             cy,
-            r
+            r,
           }}
         />
       </Svg>

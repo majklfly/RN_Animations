@@ -23,7 +23,7 @@ const {
   block,
   and,
   not,
-  neq
+  neq,
 } = Animated;
 const { width, height } = Dimensions.get("window");
 const containerWidth = width;
@@ -33,8 +33,8 @@ const offsetY = new Value((containerHeight - CARD_HEIGHT) / 2);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: StyleGuide.palette.background
-  }
+    backgroundColor: StyleGuide.palette.background,
+  },
 });
 const [card] = cards;
 
@@ -49,7 +49,7 @@ const withDecay = (
     finished: new Value(0),
     velocity: new Value(0),
     position: new Value(0),
-    time: new Value(0)
+    time: new Value(0),
   };
   const config = { deceleration: 0.998 };
 
@@ -67,14 +67,14 @@ const withDecay = (
         cond(and(not(clockRunning(clock)), not(state.finished)), [
           set(state.velocity, velocity),
           set(state.time, 0),
-          startClock(clock)
+          startClock(clock),
         ]),
         decay(clock, state, config),
-        cond(state.finished, finishDecay)
+        cond(state.finished, finishDecay),
       ],
       [set(state.finished, 0), set(state.position, add(offset, value))]
     ),
-    state.position
+    state.position,
   ]);
 };
 
@@ -89,7 +89,7 @@ export default () => {
     translationX,
     translationY,
     velocityX,
-    velocityY
+    velocityY,
   });
   const translateX = diffClamp(
     withDecay(translationX, velocityX, state, offsetX),
@@ -106,7 +106,7 @@ export default () => {
       <PanGestureHandler {...gestureHandler}>
         <Animated.View
           style={{
-            transform: [{ translateX }, { translateY }]
+            transform: [{ translateX }, { translateY }],
           }}
         >
           <Card {...{ card }} />

@@ -10,13 +10,13 @@ const containerWidth = width;
 const containerHeight = height - Constants.statusBarHeight - 44;
 const center = {
   x: containerWidth / 2,
-  y: containerHeight / 2
+  y: containerHeight / 2,
 };
 const radius = 100;
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export default () => {

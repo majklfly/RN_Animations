@@ -12,8 +12,8 @@ const s3 = s2 - STROKE_WIDTH * 2;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000001"
-  }
+    backgroundColor: "#000001",
+  },
 });
 
 export default () => {

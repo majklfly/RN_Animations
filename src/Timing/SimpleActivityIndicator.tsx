@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   container: {
     height: width,
@@ -22,14 +22,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#d3d3d3",
     borderTopLeftRadius: width / 2,
     borderTopRightRadius: width / 2,
-    borderBottomLeftRadius: width / 2
+    borderBottomLeftRadius: width / 2,
   },
   bubble: {
     width: size,
     height: size,
     borderRadius: size / 2,
-    backgroundColor: StyleGuide.palette.primary
-  }
+    backgroundColor: StyleGuide.palette.primary,
+  },
 });
 
 interface SimpleActivityIndicatorProps {}
@@ -39,7 +39,7 @@ export default () => {
   return (
     <View style={styles.root}>
       <View style={styles.container}>
-        {bubbles.map(i => {
+        {bubbles.map((i) => {
           return <View key={i} style={styles.bubble} />;
         })}
       </View>

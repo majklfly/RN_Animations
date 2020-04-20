@@ -17,8 +17,8 @@ const offsetY = new Value((containerHeight - CARD_HEIGHT) / 2);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: StyleGuide.palette.background
-  }
+    backgroundColor: StyleGuide.palette.background,
+  },
 });
 const [card] = cards;
 
@@ -41,7 +41,7 @@ export default () => {
   const gestureHandler = onGestureEvent({
     state,
     translationX,
-    translationY
+    translationY,
   });
   const translateX = diffClamp(
     withOffset(translationX, state, offsetX),
@@ -58,7 +58,7 @@ export default () => {
       <PanGestureHandler {...gestureHandler}>
         <Animated.View
           style={{
-            transform: [{ translateX }, { translateY }]
+            transform: [{ translateX }, { translateY }],
           }}
         >
           <Card {...{ card }} />

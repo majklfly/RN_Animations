@@ -17,20 +17,20 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 150,
     overflow: "hidden",
-    backgroundColor: StyleGuide.palette.backgroundPrimary
+    backgroundColor: StyleGuide.palette.backgroundPrimary,
   },
   image: {
     ...StyleSheet.absoluteFillObject,
     borderRadius: 8,
     width: undefined,
     height: undefined,
-    transform: [{ scale: 1 }]
+    transform: [{ scale: 1 }],
   },
   content: {
     ...StyleSheet.absoluteFillObject,
     padding: StyleGuide.spacing,
-    justifyContent: "flex-end"
-  }
+    justifyContent: "flex-end",
+  },
 });
 
 interface ThumbnailProps {
@@ -46,7 +46,7 @@ export default ({
   source,
   onPress,
   dark,
-  resizeMode
+  resizeMode,
 }: ThumbnailProps) => {
   const value = new Value(0);
   const scale = bInterpolate(value, 1, 1.5);
@@ -58,8 +58,8 @@ export default ({
             styles.image,
             {
               resizeMode: resizeMode || "contain",
-              transform: [{ scale }]
-            }
+              transform: [{ scale }],
+            },
           ]}
           {...{ source }}
         />

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Switch, StyleSheet, Platform } from "react-native";
+import { Platform, StyleSheet, Switch, View } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { StyleGuide } from "../components";
 
@@ -12,11 +12,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: StyleGuide.spacing * 2,
-    alignItems: "center"
+    alignItems: "center",
   },
   switch: {
-    marginRight: StyleGuide.spacing
-  }
+    marginRight: StyleGuide.spacing,
+  },
 });
 
 export default ({ value, onValueChange }: SwitchProps) => {
@@ -27,7 +27,7 @@ export default ({ value, onValueChange }: SwitchProps) => {
         thumbColor={Platform.OS === "android" ? "white" : undefined}
         trackColor={{
           false: StyleGuide.palette.primary,
-          true: StyleGuide.palette.primary
+          true: StyleGuide.palette.primary,
         }}
         {...{ value, onValueChange }}
       />

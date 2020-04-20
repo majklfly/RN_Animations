@@ -6,7 +6,7 @@ const { concat, interpolate } = Animated;
 enum SVGCommand {
   MOVE,
   CURVE,
-  CLOSE
+  CLOSE,
 }
 
 interface SVGSegment {
@@ -44,7 +44,7 @@ const isCurve = (command: SVGSegment): command is Curve =>
 
 export const serialize = (path: SVGSegment[]) => {
   return path
-    .map(segment => {
+    .map((segment) => {
       if (isMove(segment)) {
         return serializeMove(segment);
       }

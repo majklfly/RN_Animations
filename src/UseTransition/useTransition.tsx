@@ -4,7 +4,7 @@ import Animated, { Easing } from "react-native-reanimated";
 import {
   bInterpolate,
   transformOrigin,
-  useTransition
+  useTransition,
 } from "react-native-redash";
 
 import { Button, Card, StyleGuide, cards } from "../components";
@@ -14,8 +14,8 @@ const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-end"
-  }
+    justifyContent: "flex-end",
+  },
 });
 
 export default () => {

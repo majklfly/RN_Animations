@@ -18,15 +18,15 @@ const {
   stopClock,
   clockRunning,
   and,
-  not
+  not,
 } = Animated;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: StyleGuide.palette.background
-  }
+    backgroundColor: StyleGuide.palette.background,
+  },
 });
 
 export default () => {

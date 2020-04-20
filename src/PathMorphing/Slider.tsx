@@ -10,17 +10,17 @@ const SLIDER_WIDTH = CONTAINER_WIDTH - CURSOR_SIZE;
 const styles = StyleSheet.create({
   container: {
     alignSelf: "center",
-    width: CONTAINER_WIDTH
+    width: CONTAINER_WIDTH,
   },
   dividerContainer: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   divider: {
     borderColor: "rgba(50, 50, 50, 0.5)",
     width: SLIDER_WIDTH,
-    borderWidth: StyleSheet.hairlineWidth
+    borderWidth: StyleSheet.hairlineWidth,
   },
   cursor: {
     width: CURSOR_SIZE,
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "white",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   cursorPoint: {
     borderRadius: 5,
     width: 10,
     height: 10,
-    backgroundColor: "black"
-  }
+    backgroundColor: "black",
+  },
 });
 
 export default () => {

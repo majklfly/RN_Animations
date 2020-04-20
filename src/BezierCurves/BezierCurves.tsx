@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   content: {
     width: size + STROKE_WIDTH,
-    height: size + STROKE_WIDTH
-  }
+    height: size + STROKE_WIDTH,
+  },
 });
 
 export default () => {
@@ -24,11 +24,11 @@ export default () => {
   const max = min + size;
   const start = {
     x: min,
-    y: max
+    y: max,
   };
   const end = {
     x: max,
-    y: min
+    y: min,
   };
   const d = `M ${start.x} ${start.y} C 10 10, 50 50, ${end.x} ${end.y}`;
   return (

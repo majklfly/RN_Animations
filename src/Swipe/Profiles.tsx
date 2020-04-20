@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Dimensions, SafeAreaView, StyleSheet } from "react-native";
+import { Dimensions, SafeAreaView, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Feather as Icon } from "@expo/vector-icons";
 
@@ -7,7 +7,7 @@ import { useMemoOne } from "use-memo-one";
 import { RectButton } from "react-native-gesture-handler";
 import Card, { Profile } from "./Profile";
 import Swipeable from "./Swipeable";
-import { timing, StyleGuide } from "../components";
+import { StyleGuide, timing } from "../components";
 
 const { width, height } = Dimensions.get("window");
 const deltaX = width / 2;
@@ -19,22 +19,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: StyleGuide.palette.background,
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 16
+    padding: 16,
   },
   cards: {
     flex: 1,
     marginHorizontal: 16,
-    zIndex: 100
+    zIndex: 100,
   },
   footer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    padding: 16
+    padding: 16,
   },
   circle: {
     width: 64,
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.18,
-    shadowRadius: 2
-  }
+    shadowRadius: 2,
+  },
 });
 
 interface ProfilesProps {
@@ -68,7 +68,7 @@ export default ({ profiles }: ProfilesProps) => {
       <View style={styles.cards}>
         <Animated.View
           style={{
-            ...StyleSheet.absoluteFillObject
+            ...StyleSheet.absoluteFillObject,
           }}
         >
           <Card {...{ profile }} />

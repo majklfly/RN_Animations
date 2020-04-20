@@ -6,7 +6,7 @@ import { panGestureHandler } from "react-native-redash";
 
 import Card, {
   CardProps,
-  CARD_HEIGHT as INNER_CARD_HEIGHT
+  CARD_HEIGHT as INNER_CARD_HEIGHT,
 } from "../components/Card";
 
 export const CARD_HEIGHT = INNER_CARD_HEIGHT + 32;
@@ -27,7 +27,7 @@ const {
   add,
   greaterThan,
   abs,
-  not
+  not,
 } = Animated;
 
 interface SortableCardProps extends CardProps {
@@ -46,7 +46,7 @@ export default ({ card, index, offsets }: SortableCardProps) => {
           width,
           height: CARD_HEIGHT,
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Card {...{ card }} />

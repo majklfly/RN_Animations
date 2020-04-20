@@ -15,8 +15,8 @@ const containerHeight = height - Constants.statusBarHeight - 44;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: StyleGuide.palette.background
-  }
+    backgroundColor: StyleGuide.palette.background,
+  },
 });
 const [card] = cards;
 

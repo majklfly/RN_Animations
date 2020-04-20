@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import React, { useRef, useState } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
 import {
   Transition,
   Transitioning,
-  TransitioningView
+  TransitioningView,
 } from "react-native-reanimated";
 import { Button, Text } from "../components";
 
@@ -18,11 +18,11 @@ export { profilePic } from "./ProfilePic";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   text: {
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 export default () => {
