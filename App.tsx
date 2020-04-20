@@ -20,6 +20,7 @@ import Trigonometry from "./src/Trigonometry";
 import CircularSlider from "./src/CircularSlider";
 import BezierCurves from "./src/BezierCurves";
 import PathMorphing from "./src/PathMorphing";
+import PinchGesture, { pictures } from "./src/PinchGesture";
 
 const fonts = {
   "SFProText-Bold": require("./assets/fonts/SF-Pro-Text-Bold.otf"),
@@ -32,6 +33,7 @@ const assets = [
   ...cards.map((card) => card.source),
   ...profiles.map((profile) => profile.profile),
   profilePic,
+  ...pictures,
 ];
 
 const AppNavigator = createAppContainer(
@@ -139,6 +141,13 @@ const AppNavigator = createAppContainer(
         screen: PathMorphing,
         navigationOptions: {
           title: "Path Morphing",
+        },
+      },
+      Pinch: {
+        screen: PinchGesture,
+        navigationOptions: {
+          title: "PinchGesture",
+          header: null,
         },
       },
     },

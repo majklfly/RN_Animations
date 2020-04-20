@@ -25,7 +25,7 @@ export default () => {
       <Button
         label={show ? "Hide" : "Show"}
         primary
-        onPress={() => setShow(!show)}
+        onPress={() => setShow((prev) => !prev)}
       />
     </View>
   );

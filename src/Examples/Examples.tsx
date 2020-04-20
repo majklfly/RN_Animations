@@ -84,8 +84,13 @@ export const examples = [
   },
   {
     screen: "PathMorphing",
-    title: "PathMorphing",
+    title: "Path Morphing",
     source: require("../../assets/examples/path-morphing.png"),
+  },
+  {
+    screen: "Pinch",
+    title: "Pinch Gesture",
+    source: require("../../assets/examples/pinch-gesture.png"),
   },
 ];
 
