@@ -1,10 +1,16 @@
 import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet } from "react-native";
 import { vec } from "react-native-redash";
 
 const { width, height } = Dimensions.get("window");
-const CANVAS = vec.create(width, height);
-const CENTER = vec.divide(CANVAS, 2);
+const CANVAS = {
+  x: width,
+  y: height,
+};
+const CENTER = {
+  x: width / 2,
+  y: height / 2,
+};
 const styles = StyleSheet.create({
   image: {
     ...StyleSheet.absoluteFillObject,

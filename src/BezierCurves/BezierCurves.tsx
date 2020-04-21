@@ -1,18 +1,12 @@
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Svg, { Line, Path } from "react-native-svg";
-<<<<<<< HEAD
-
-import { StyleGuide } from "../components";
-
-=======
 import Animated from "react-native-reanimated";
 
 import ControlPoint from "./ControlPoint";
 import { StyleGuide } from "../components";
 
 const { Value, concat } = Animated;
->>>>>>> master
 const { width } = Dimensions.get("window");
 const size = width - 48;
 const STROKE_WIDTH = 4;
