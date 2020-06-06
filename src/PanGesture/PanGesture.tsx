@@ -8,7 +8,7 @@ import { diffClamp, onGestureEvent } from "react-native-redash";
 import { Card, StyleGuide, cards } from "../components";
 import { CARD_HEIGHT, CARD_WIDTH } from "../components/Card";
 
-const { Value, cond, set, eq, add } = Animated;
+const { Value, cond, set, eq, add, event, block } = Animated;
 const { width, height } = Dimensions.get("window");
 const containerWidth = width;
 const containerHeight = height - Constants.statusBarHeight - 44;
@@ -20,12 +20,44 @@ const styles = StyleSheet.create({
 });
 const [card] = cards;
 
+const withOffset = (
+  value: Animated.Value<number>,
+  state: Animated.Value<State>,
+  offset: Animated.Value<number>
+) => {
+  return block([
+    cond(
+      eq(state, State.END),
+      [set(offset, add(offset, value)), offset],
+      add(offset, value)
+    ),
+  ]);
+};
+
 export default () => {
+  const state = new Value(State.UNDETERMINED);
+  const translationX = new Value(0);
+  const translationY = new Value(0);
+  const offsetX = new Value((containerWidth - CARD_WIDTH) / 2);
+  const offsetY = new Value((containerHeight - CARD_HEIGHT) / 2);
+  const gestureHandler = onGestureEvent({ state, translationX, translationY });
+  const translateX = diffClamp(
+    withOffset(translationX, state, offsetX),
+    0,
+    containerWidth - CARD_WIDTH
+  );
+  const translateY = diffClamp(
+    withOffset(translationY, state, offsetY),
+    0,
+    containerHeight - CARD_HEIGHT
+  );
   return (
     <View style={styles.container}>
-      <View>
-        <Card {...{ card }} />
-      </View>
+      <PanGestureHandler {...gestureHandler}>
+        <Animated.View style={{ transform: [{ translateX }, { translateY }] }}>
+          <Card {...{ card }} />
+        </Animated.View>
+      </PanGestureHandler>
     </View>
   );
 };

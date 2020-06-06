@@ -1,4 +1,5 @@
 export type Lessons = {
+  Playground: undefined;
   Examples: undefined;
   ClockValuesAndIdentities: undefined;
   Transitions: undefined;

@@ -25,25 +25,48 @@ const styles = StyleSheet.create({
   },
 });
 
+const transition = (
+  <Transition.Together>
+    <Transition.In type="fade" durationMs={400} />
+    <Transition.Out type="fade" durationMs={400} />
+  </Transition.Together>
+);
+
 export default () => {
+  const ref = useRef<TransitioningView>(null);
+  const [dark, setDark] = useState(false);
   return (
-    <View style={styles.container}>
+    <Transitioning.View style={styles.container} {...{ ref, transition }}>
+      {dark && (
+        <View
+          style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black" }}
+        />
+      )}
       <SafeAreaView />
+      <Switch
+        value={dark}
+        onValueChange={() => {
+          if (ref.current) {
+            ref.current.animateNextTransition();
+          }
+          setDark(!dark);
+        }}
+      />
       <ProfilePic />
       <View>
-        <Text type="title3" style={styles.text}>
+        <Text type="title3" style={styles.text} {...{ dark }}>
           Krzysztof Magiera
         </Text>
-        <Text type="headline" style={styles.text}>
+        <Text type="headline" style={styles.text} {...{ dark }}>
           Kraków, Poland
         </Text>
       </View>
       <Followers followers={3569} following={310} />
       <SocialMediaIcons />
-      <Text type="body" style={styles.text}>
+      <Text type="body" style={styles.text} {...{ dark }}>
         When speaking of animations, the key to success is to avoid frame drops
       </Text>
       <Button label="Follow" primary onPress={() => {}} />
-    </View>
+    </Transitioning.View>
   );
 };

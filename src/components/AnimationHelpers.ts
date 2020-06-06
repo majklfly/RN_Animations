@@ -170,7 +170,11 @@ export const withSpring = (props: WithSpringParams) => {
         startClock(clock),
       ]),
       reSpring(clock, springState, config),
-      cond(springState.finished, [...snap, ...finishSpring]),
+      cond(springState.finished, [
+        set(gestureAndAnimationIsOver, 1),
+        onSnap && call([springState.position], onSnap),
+        ...finishSpring,
+      ]),
     ]),
     springState.position,
   ]);

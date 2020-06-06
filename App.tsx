@@ -1,5 +1,6 @@
 import React from "react";
-import { StatusBar } from "react-native";
+import { Button, StatusBar, TouchableOpacity } from "react-native";
+import { useHistory } from "react-router-dom";
 import { createStackNavigator } from "@react-navigation/stack";
 import { enableScreens } from "react-native-screens";
 
@@ -22,6 +23,7 @@ import CircularSlider from "./src/CircularSlider";
 import BezierCurves from "./src/BezierCurves";
 import PathMorphing from "./src/PathMorphing";
 import PinchGesture, { pictures } from "./src/PinchGesture";
+import Playground from "./src/Playground";
 import { Lessons } from "./src/components/Routes";
 
 enableScreens();

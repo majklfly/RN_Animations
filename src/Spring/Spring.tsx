@@ -4,30 +4,30 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import Constants from "expo-constants";
 
-import { onGestureEvent } from "react-native-redash";
+import { clamp, onGestureEvent } from "react-native-redash";
 import { Card, StyleGuide, cards } from "../components";
 import { CARD_HEIGHT, CARD_WIDTH } from "../components/Card";
 
 const {
   Clock,
   Value,
-  diffClamp,
   cond,
   set,
   eq,
   add,
-  decay,
+  spring,
   clockRunning,
   startClock,
   stopClock,
   block,
   and,
   not,
-  neq,
 } = Animated;
 const { width, height } = Dimensions.get("window");
 const containerWidth = width;
 const containerHeight = height - Constants.statusBarHeight - 44;
+const snapX = new Value((containerWidth - CARD_WIDTH) / 2);
+const snapY = new Value((containerHeight - CARD_HEIGHT) / 2);
 const offsetX = new Value((containerWidth - CARD_WIDTH) / 2);
 const offsetY = new Value((containerHeight - CARD_HEIGHT) / 2);
 const styles = StyleSheet.create({
@@ -38,11 +38,12 @@ const styles = StyleSheet.create({
 });
 const [card] = cards;
 
-const withDecay = (
+const withSpring = (
   value: Animated.Value<number>,
   velocity: Animated.Value<number>,
   gestureState: Animated.Value<State>,
-  offset: Animated.Value<number>
+  offset: Animated.Value<number>,
+  snapPoint: Animated.Value<number>
 ) => {
   const clock = new Clock();
   const state = {
@@ -51,7 +52,15 @@ const withDecay = (
     position: new Value(0),
     time: new Value(0),
   };
-  const config = { deceleration: 0.998 };
+  const config = {
+    damping: 10,
+    mass: 1,
+    stiffness: 100,
+    overshootClamping: false,
+    restSpeedThreshold: 0.001,
+    restDisplacementThreshold: 0.001,
+    toValue: snapPoint,
+  };
 
   const isDecayInterrupted = and(
     eq(gestureState, State.BEGAN),
@@ -69,7 +78,7 @@ const withDecay = (
           set(state.time, 0),
           startClock(clock),
         ]),
-        decay(clock, state, config),
+        spring(clock, state, config),
         cond(state.finished, finishDecay),
       ],
       [set(state.finished, 0), set(state.position, add(offset, value))]
@@ -78,7 +87,7 @@ const withDecay = (
   ]);
 };
 
-export default () => {
+const Spring = () => {
   const state = new Value(State.UNDETERMINED);
   const translationX = new Value(0);
   const translationY = new Value(0);
@@ -91,13 +100,13 @@ export default () => {
     velocityX,
     velocityY,
   });
-  const translateX = diffClamp(
-    withDecay(translationX, velocityX, state, offsetX),
+  const translateX = clamp(
+    withSpring(translationX, velocityX, state, offsetX, snapX),
     0,
     containerWidth - CARD_WIDTH
   );
-  const translateY = diffClamp(
-    withDecay(translationY, velocityY, state, offsetY),
+  const translateY = clamp(
+    withSpring(translationY, velocityY, state, offsetY, snapY),
     0,
     containerHeight - CARD_HEIGHT
   );
@@ -115,3 +124,5 @@ export default () => {
     </View>
   );
 };
+
+export default Spring;
