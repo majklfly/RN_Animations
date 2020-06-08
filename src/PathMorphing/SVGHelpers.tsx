@@ -61,6 +61,78 @@ interface PathInterpolation<T extends readonly number[]> {
   outputRange: { [K in keyof T]: SVGSegment[] };
 }
 
+export const interpolatePath = <T extends readonly number[]>(
+  progress: Animated.Node<number>,
+  { inputRange, outputRange }: PathInterpolation<T>
+) => {
+  const path = outputRange[0].map((segment, index) => {
+    if (isMove(segment)) {
+      const points = outputRange.map((p) => {
+        const seg = p[index];
+        if (isMove(seg)) {
+          return seg;
+        }
+        throw new Error("Path from output range are not symmetrical");
+      });
+      return {
+        type: SVGCommand.MOVE,
+        x: interpolate(progress, {
+          inputRange,
+          outputRange: points.map(({ x }) => x),
+        }),
+        y: interpolate(progress, {
+          inputRange,
+          outputRange: points.map(({ y }) => y),
+        }),
+      };
+    }
+    if (isCurve(segment)) {
+      const curves = outputRange.map((p) => {
+        const seg = p[index];
+        if (isCurve(seg)) {
+          return seg;
+        }
+        throw new Error("Path from output range are not symmetrical");
+      });
+      return {
+        type: SVGCommand.CURVE,
+        c1: {
+          x: interpolate(progress, {
+            inputRange,
+            outputRange: curves.map(({ c1 }) => c1.x),
+          }),
+          y: interpolate(progress, {
+            inputRange,
+            outputRange: curves.map(({ c1 }) => c1.y),
+          }),
+        },
+        c2: {
+          x: interpolate(progress, {
+            inputRange,
+            outputRange: curves.map(({ c2 }) => c2.x),
+          }),
+          y: interpolate(progress, {
+            inputRange,
+            outputRange: curves.map(({ c2 }) => c2.y),
+          }),
+        },
+        to: {
+          x: interpolate(progress, {
+            inputRange,
+            outputRange: curves.map(({ to }) => to.x),
+          }),
+          y: interpolate(progress, {
+            inputRange,
+            outputRange: curves.map(({ to }) => to.y),
+          }),
+        },
+      };
+    }
+    return segment;
+  });
+  return serialize(path);
+};
+
 export const createSVGPath = (): SVGSegment[] => [];
 
 export const moveTo = (commands: SVGSegment[], x: number, y: number) => {

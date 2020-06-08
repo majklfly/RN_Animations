@@ -3,11 +3,13 @@ import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 
-import { close, createSVGPath, curveTo, moveTo, serialize } from "./SVGHelpers";
-
-interface EyeProps {
-  flip?: boolean;
-}
+import {
+  close,
+  createSVGPath,
+  curveTo,
+  interpolatePath,
+  moveTo,
+} from "./SVGHelpers";
 
 const angryPath = createSVGPath();
 const AnimatedPath = Animated.createAnimatedComponent(Path);
@@ -97,8 +99,16 @@ curveTo(goodPath, {
 });
 close(goodPath);
 
-export default ({ flip }: EyeProps) => {
-  const d = serialize(angryPath);
+interface EyeProps {
+  progress: Animated.Node<number>;
+  flip?: boolean;
+}
+
+export default ({ flip, progress }: EyeProps) => {
+  const d = interpolatePath(progress, {
+    inputRange: [0, 0.5, 1],
+    outputRange: [angryPath, normalPath, goodPath],
+  });
   const rotateY = flip ? "180deg" : "0deg";
   return (
     <View style={{ transform: [{ rotateY }] }}>

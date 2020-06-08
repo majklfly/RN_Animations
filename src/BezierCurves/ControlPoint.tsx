@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated from "react-native-reanimated";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
 import {
   diffClamp,
   panGestureHandler,
@@ -9,66 +9,56 @@ import {
   withOffset,
 } from "react-native-redash";
 
-const { useCode, set, sub } = Animated;
+import { StyleGuide } from "../components";
+
+const { useCode, set, sub, Value, event, block } = Animated;
 export const CONTROL_POINT_RADIUS = 20;
-
-interface AnimatedPoint {
-  x: Animated.Value<number>;
-  y: Animated.Value<number>;
-}
-
-interface Point {
-  x: number;
-  y: number;
-}
-
 interface ControlPointProps {
-  point: AnimatedPoint;
-  defaultPoint: Point;
-  backgroundColor: string;
+  point: {
+    x: Animated.Value<number>;
+    y: Animated.Value<number>;
+  };
   min: number;
   max: number;
 }
 
-export default ({
-  point: { x, y },
-  defaultPoint,
-  min,
-  max,
-  backgroundColor,
-}: ControlPointProps) => {
-  const { translation, gestureHandler, state } = panGestureHandler();
-  const offset = vec.createValue(defaultPoint.x, defaultPoint.y);
-  const translateX = diffClamp(
-    withOffset(translation.x, state, offset.x),
-    min,
-    max
-  );
-  const translateY = diffClamp(
-    withOffset(translation.y, state, offset.y),
-    min,
-    max
-  );
-  useCode(() => [set(x, translateX), set(y, translateY)], [
-    translateX,
-    translateY,
-    x,
-    y,
+export default ({ point: { x, y }, min, max }: ControlPointProps) => {
+  const translationX = new Value(0);
+  const translationY = new Value(0);
+  const state = new Value(State.UNDETERMINED);
+  const onGestureEvent = event([
+    {
+      nativeEvent: {
+        translationX,
+        translationY,
+        state,
+      },
+    },
   ]);
+
+  const x1 = withOffset(translationX, state);
+  const y1 = withOffset(translationY, state);
+
+  const translateX = diffClamp(x1, min, max);
+  const translateY = diffClamp(y1, min, max);
+
+  useCode(() => block([set(x, translateX), set(y, translateY)]), []);
+
   return (
-    <PanGestureHandler {...gestureHandler}>
+    <PanGestureHandler
+      onHandlerStateChange={onGestureEvent}
+      {...{ onGestureEvent }}
+    >
       <Animated.View
         style={{
           ...StyleSheet.absoluteFillObject,
-          width: CONTROL_POINT_RADIUS * 2,
-          height: CONTROL_POINT_RADIUS * 2,
-          borderRadius: CONTROL_POINT_RADIUS,
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          backgroundColor: StyleGuide.palette.primary,
           borderWidth: 4,
-          backgroundColor,
-          transform: [
-            { translateX: sub(x, CONTROL_POINT_RADIUS) },
-            { translateY: sub(y, CONTROL_POINT_RADIUS) },
-          ],
+          borderColor: "black",
+          transform: [{ translateX: sub(translateX, 15) }, { translateY }],
         }}
       />
     </PanGestureHandler>

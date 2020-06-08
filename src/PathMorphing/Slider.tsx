@@ -1,8 +1,10 @@
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
+import { clamp, onGestureEvent, withOffset } from "react-native-redash";
+import Animated from "react-native-reanimated";
 
-interface SliderProps {}
-
+const { Value, divide, useCode, set } = Animated;
 const { width } = Dimensions.get("window");
 const CURSOR_SIZE = 40;
 const CONTAINER_WIDTH = width - 64;
@@ -39,15 +41,32 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => {
+interface SliderProps {
+  progress: Animated.Value<number>;
+}
+
+export default ({ progress }: SliderProps) => {
+  const translationX = new Value(0);
+  const state = new Value(State.UNDETERMINED);
+  const gestureHandler = onGestureEvent({
+    translationX,
+    state,
+  });
+
+  const translateX = clamp(withOffset(translationX, state), 0, SLIDER_WIDTH);
+
+  useCode(() => set(progress, divide(translateX, SLIDER_WIDTH)), []);
+
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>
         <View style={styles.divider} />
       </View>
-      <View style={styles.cursor}>
-        <View style={styles.cursorPoint} />
-      </View>
+      <PanGestureHandler {...gestureHandler}>
+        <Animated.View style={[styles.cursor, { transform: [{ translateX }] }]}>
+          <View style={styles.cursorPoint} />
+        </Animated.View>
+      </PanGestureHandler>
     </View>
   );
 };
